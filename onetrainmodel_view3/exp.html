@@ -1,0 +1,127 @@
+<html>
+
+<head>
+
+
+<script type="text/javascript">
+
+
+
+    function initfun(){
+
+          document.onkeydown = checkKey;
+
+
+    }
+
+
+    function checkKey(e) {
+
+        e = e || window.event;
+
+        if (e.keyCode == '38') {
+            // up arrow
+        }
+        else if (e.keyCode == '40') {
+            // down arrow
+        }
+        else if (e.keyCode == '37') {
+           // left arrow
+           updateImage(-1);
+        }
+        else if (e.keyCode == '39') {
+           // right arrow
+           updateImage(1);
+        }
+
+    }
+
+
+    function updateImage(incr) {
+        var minframe = 1;
+        var wrapmax = 419;
+
+        var currentIndex = document.getElementById("frameno").value;
+        //alert('frame = ' + currentIndex);
+
+        //increment frame
+        currentIndex = parseInt(currentIndex) + incr;
+        //alert('currentIndex = ' + currentIndex);
+
+        //apply wrap around
+        if (currentIndex > wrapmax){
+            currentIndex = 1;          
+        } 
+        if(currentIndex < 1){
+            currentIndex = wrapmax;          
+        }
+        document.getElementById("frameno").value = currentIndex;
+
+        var imageIndex = minframe +  currentIndex - 1;
+
+        //update all the images
+        document.getElementById("image1").src = "annotation/" + imageIndex + ".jpg";
+        document.getElementById("image2").src = "disp/" + imageIndex + ".jpg";
+        document.getElementById("image3").src = "left/" + imageIndex + ".jpg";
+	document.getElementById("image4").src = "of/" + imageIndex + ".jpg";
+	document.getElementById("image5").src = "results/" + imageIndex + ".jpg";
+
+       // document.getElementById("demo").style.color = "red";
+    }
+</script> 
+
+
+</head>
+
+
+<body onload="initfun();">
+
+<h1>Testing Sample - Trained with all three views and tested in view 3</h1>
+<h2> - Sriram K. Kumar </h2>
+<br>
+<br>
+<hr>
+Training data size : 5000
+<br>
+input : 12D input velocity vector of all three views
+<br>
+output : flow statistics
+<br>
+Observation : The preformance of the algorithm looks to be reasonable as similar to view 1. The ROC curve for this experiment is show in the below image as "3model-view3". Bottom of the page you can see the image sequences of this experiment with threshold = 10.
+<br>
+<br>
+<br>
+ROC Curve<br><img src="../other_images/roc_model_3V and single view.jpg"></td>
+
+<br>
+<hr>
+
+Frame number : <input type="text" value="1" id="frameno"> <input type="button" onclick="updateImage(-1)" value="<"> <input type="button" onclick="updateImage(1)" value=">"><h4> Please use the Left and Right Arrow key on your keyboard to navigate.<h4>
+<br>
+Browse through the images with the navigation buttons. To straight away go to a specific frame, enter the frame number (1-647) and press the next button. 
+
+<hr>
+
+
+<table style="width:100%">
+  <tr>
+    <td>Left RGB image (Original)<br><img src="left/1.jpg" id="image3"></td>
+    <td>Disparity<br><img src="disp/1.jpg" id="image2"></td> 
+    <td>Annotation image<br><img src="annotation/1.jpg" id="image1"></td>
+  </tr>
+  <tr>
+    <td>Optical Flow image<br><img src="of/1.jpg" id="image4"></td>
+    <td>Anomaly<br><img src="results/1.jpg" id="image5"></td> 
+  </tr>
+
+</table>
+
+
+
+
+
+
+</body>
+
+
+</html>
